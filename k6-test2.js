@@ -4,7 +4,7 @@ export default function () {
   const url = 'http://test.k6.io/login';
   const payload = JSON.stringify({
     email: 'rila@mail.com',
-    password: '12345678',
+    password: '1234567890',
   });
 
   const params = {

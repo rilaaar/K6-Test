@@ -7,9 +7,9 @@ export const options = {
     cretae_users: {
       executor: 'constant-arrival-rate',
       duration: '5s', // total duration
-      preAllocatedVUs: 10, // to allocate runtime resources     preAll
+      preAllocatedVUs: 2, // to allocate runtime resources     preAll
 
-      rate: 35, // number of constant iterations given `timeUnit`
+      rate: 5, // number of constant iterations given `timeUnit`
       timeUnit: '2s',
     },
   },
@@ -22,18 +22,20 @@ export default function () {
     job: 'leader',
   });
 
-  const params = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+//  const params = {
+//    headers: {
+//      'Content-Type': 'application/json',
+//    },
+//  }; 
 
-  const res = http.post('https://reqres.in/api/users', payload, params);
+  const headers = { 'Content-Type': 'application/json' };
+
+  const res = http.post('https://reqres.in/api/users', payload, {headers});
 
   check(res, {
     'Post status is 201': (r) => res.status === 201,
-  //  'Post Content-Type header': (r) => res.headers['Content-Type'] === 'application/json',
-  //  'Post response name': (r) => res.status === 201 && res.json().json.name === 'morpheus',
+    'Post Content-Type header': (r) => res.headers['Content-Type'] === 'application/json',
+    'Post response name': (r) => res.status === 201 && res.json().json.name === 'morpheus',
   });
 }
 

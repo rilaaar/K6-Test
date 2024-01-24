@@ -9,14 +9,14 @@ export const options = {
       duration: '10s', // total duration
       preAllocatedVUs: 1000, // to allocate runtime resources     preAll
 
-      rate: 3500, // number of constant iterations given `timeUnit`
+      rate: 7000, // number of constant iterations given `timeUnit`
       timeUnit: '2s',
     },
   },
 };
 
 export default function () {
-//  const url = 'https://reqres.in/api/users';
+  const url = 'https://reqres.in/api/users';
   const payload = JSON.stringify({
     name: 'morpheus',
     job: 'leader',
@@ -28,14 +28,14 @@ export default function () {
     },
   }; 
 
-//  const headers = { 'Content-Type': 'application/json' };
 
-  const res = http.post('https://reqres.in/api/users', payload, params);
+  const res = http.post(url, payload, params);
 
   check(res, {
     'Verify Post status is 201': (r) => res.status === 201,
-//    'Post Content-Type header': (r) => res.headers['Content-Type'] === 'application/json',
-//    'Post response name': (r) => res.status === 201 && res.json().json.name === 'morpheus',
+    'Verify Post Content-Type header': (r) => params.headers['Content-Type'] === 'application/json',
+//    'Verify Post response name': (r) => res.status === 201 && res.json().json && payload.json().json.name === 'morpheus',
+    'Verify Post response name': (r) => res.json().json.name === 'morpheus',
   });
 }
 

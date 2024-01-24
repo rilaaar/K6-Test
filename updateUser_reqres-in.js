@@ -2,7 +2,6 @@ import http from 'k6/http';
 import { check } from 'k6';
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
-
 export const options = {
   scenarios: {
     cretae_users: {
@@ -17,10 +16,10 @@ export const options = {
 };
 
 export default function () {
-  const url = 'https://reqres.in/api/users';
+  const url = 'https://reqres.in/api/users/2';
   const payload = JSON.stringify({
     name: 'morpheus',
-    job: 'leader',
+    job: 'zion resident',
   });
 
   const params = {
@@ -30,20 +29,18 @@ export default function () {
   }; 
 
 
-  const res = http.post(url, payload, params);
+  const res = http.put(url, payload, params);
 
   check(res, {
-    'Verify Post status is 201': (r) => res.status === 201,
+    'Verify Post status is 200 OK': (r) => res.status === 200,
     'Verify Post Content-Type header': (r) => params.headers['Content-Type'] === 'application/json',
-//    'Verify Post response name': (r) => res.status === 201 && res.json().json && payload.json().json.name === 'morpheus',
-    'Verify Post response name': (r) => res.json().json.name === 'morpheus',
   });
 }
 
 export function handleSummary(data) {
-  return {
-    "summary.html": htmlReport(data),
-  };
-}
+    return {
+      "summary.html": htmlReport(data),
+    };
+  }
 
-// k6 run createUser_reqres-in.js
+// k6 run updateUser_reqres-in.js

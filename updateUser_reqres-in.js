@@ -7,13 +7,17 @@ export const options = {
   scenarios: {
     update_users: {
       executor: 'constant-arrival-rate',
-      duration: '30s', // total duration
-      preAllocatedVUs: 1000, // to allocate runtime resources     preAll
-
+      duration: '10s', // total duration
+      preAllocatedVUs: 1000, // to allocate runtime resources     preAll 
+      maxVUs: 1000,
       rate: 3500, // number of constant iterations given `timeUnit`
-      timeUnit: '2s',
+      timeUnit: '1s',
     },
   },
+
+    thresholds: {
+      http_req_duration: ['p(90)<1000', 'p(95)<1500', 'p(99)<2000'], // 95% of requests must complete below 1500ms, and 99% must complete below 2s.
+    },
 };
 
 export default function () {
